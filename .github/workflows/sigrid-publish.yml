@@ -14,7 +14,7 @@ jobs:
         uses: Software-Improvement-Group/sigridci@main
         with:
           customer: utst
-          system: initial
+          system: grimoirelab-elk
           publishonly: true
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
