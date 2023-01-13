@@ -618,4 +618,4 @@ class ElasticSearch(object):
         Static version exists because not every place that uses this check has an ES object."""
         int_maj = int(major)
         return ((int_maj < 7 and distribution == 'elasticsearch')
-            or (int_maj < 1 and distribution == 'opensearch'))
+                or (int_maj < 1 and distribution == 'opensearch'))
