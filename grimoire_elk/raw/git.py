@@ -39,7 +39,6 @@ class Mapping(BaseMapping):
 
         mapping = '''
          {
-            "dynamic_date_formats": ["yyyy-MM-dd'T'HH:mm:ssZ", "E LLL d HH:mm:ss yyyy Z", "strict_date_optional_time","yyyy/MM/dd HH:mm:ss Z||yyyy/MM/dd Z"]
             "dynamic":true,
             "properties": {
                 "data": {
