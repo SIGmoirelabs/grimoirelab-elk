@@ -49,11 +49,11 @@ class Mapping(BaseMapping):
                         },
                         "AuthorDate": {
                             "type": "date",
-                            "format": "E LLL d HH:mm:ss yyyy Z||strict_date_optional_time||epoch_millis"
+                            "format": "EEE MMM dd HH:mm:ss yyyy Z||strict_date_optional_time||epoch_millis"
                         },
                         "CommitDate": {
                             "type": "date",
-                            "format": "E LLL d HH:mm:ss yyyy Z||strict_date_optional_time||epoch_millis"
+                            "format": "EEE MMM dd HH:mm:ss yyyy Z||strict_date_optional_time||epoch_millis"
                         }
                     }
                 }
