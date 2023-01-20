@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2015-2019 Bitergia
+# Copyright (C) 2015-2023 Bitergia
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -610,6 +610,14 @@ class TestElastic(unittest.TestCase):
                 'properties': {
                     'message': {
                         'type': 'text'
+                    },
+                    'AuthorDate': {
+                        'type': 'date',
+                        'format': 'EEE MMM dd HH:mm:ss yyyy Z||strict_date_optional_time||epoch_millis'
+                    },
+                    'CommitDate': {
+                        'type': 'date',
+                        'format': 'EEE MMM dd HH:mm:ss yyyy Z||strict_date_optional_time||epoch_millis'
                     }
                 }
             }

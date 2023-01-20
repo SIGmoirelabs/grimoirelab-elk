@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2015-2019 Bitergia
+# Copyright (C) 2015-2023 Bitergia
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -616,6 +616,8 @@ class ElasticSearch(object):
     def is_legacy_static(major, distribution):
         """ Returns true if ES < 7 or OS < 1, false otherwise.
         Static version exists because not every place that uses this check has an ES object."""
+        if major is None:
+            return False
         int_maj = int(major)
         return ((int_maj < 7 and distribution == 'elasticsearch')
-            or (int_maj < 1 and distribution == 'opensearch'))
+                or (int_maj < 1 and distribution == 'opensearch'))

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2015-2020 Bitergia
+# Copyright (C) 2015-2023 Bitergia
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -76,10 +76,12 @@ class GitHubQLEnrich(Enrich):
 
     event_roles = ['actor', 'reporter', 'submitter']
 
-    def __init__(self, db_sortinghat=None, db_projects_map=None, json_projects_map=None,
-                 db_user='', db_password='', db_host=''):
-        super().__init__(db_sortinghat, db_projects_map, json_projects_map,
-                         db_user, db_password, db_host)
+    def __init__(self, db_sortinghat=None, json_projects_map=None,
+                 db_user='', db_password='', db_host='', db_path=None,
+                 db_port=None, db_ssl=False):
+        super().__init__(db_sortinghat=db_sortinghat, json_projects_map=json_projects_map,
+                         db_user=db_user, db_password=db_password, db_host=db_host,
+                         db_port=db_port, db_path=db_path, db_ssl=db_ssl)
 
         self.studies = [self.enrich_duration_analysis, self.enrich_reference_analysis]
 
