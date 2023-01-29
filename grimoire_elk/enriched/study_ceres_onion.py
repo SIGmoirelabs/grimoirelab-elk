@@ -247,7 +247,7 @@ class ESOnionConnector(ESConnector):
         # from:to parameters (=> from: 0, size: 0)
         s = s[0:0]
 
-        if self._es_conn.is_legacy():
+        if ElasticSearch.is_legacy_static(self._es_major, self._es_distribution):
             s.aggs.bucket(self.TIMEFRAME, 'date_histogram', field=self._timeframe_field,
                           interval='quarter', min_doc_count=1)
         else:
@@ -304,7 +304,7 @@ class ESOnionConnector(ESConnector):
 
         # We are not keeping all metadata__* fields because we are grouping commits by author, so we can only
         # store one value per author.
-        if self._es_conn.is_legacy():
+        if ElasticSearch.is_legacy_static(self._es_major, self._es_distribution):
             bucket = s.aggs.bucket(self.TIMEFRAME, 'date_histogram', field=self._timeframe_field, interval='quarter')
         else:
             bucket = s.aggs.bucket(self.TIMEFRAME, 'date_histogram', field=self._timeframe_field, calendar_interval='quarter')
