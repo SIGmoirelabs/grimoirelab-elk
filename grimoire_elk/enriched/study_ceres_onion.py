@@ -247,8 +247,12 @@ class ESOnionConnector(ESConnector):
         # from:to parameters (=> from: 0, size: 0)
         s = s[0:0]
 
-        s.aggs.bucket(self.TIMEFRAME, 'date_histogram', field=self._timeframe_field,
-                      interval='quarter', min_doc_count=1)
+        if self._es_conn.is_legacy():
+            s.aggs.bucket(self.TIMEFRAME, 'date_histogram', field=self._timeframe_field,
+                          interval='quarter', min_doc_count=1)
+        else:
+            s.aggs.bucket(self.TIMEFRAME, 'date_histogram', field=self._timeframe_field,
+                          calendar_interval='quarter', min_doc_count=1)
         response = s.execute()
 
         quarters = []
@@ -300,12 +304,14 @@ class ESOnionConnector(ESConnector):
 
         # We are not keeping all metadata__* fields because we are grouping commits by author, so we can only
         # store one value per author.
-        s.aggs.bucket(self.TIMEFRAME, 'date_histogram', field=self._timeframe_field, interval='quarter') \
-            .metric(self.LATEST_TS, 'max', field=self._sort_on_field)\
-            .bucket(self.AUTHOR_UUID, 'terms', field=self.AUTHOR_UUID, size=1000) \
-            .metric(self.CONTRIBUTIONS, 'cardinality', field=self.contribs_field, precision_threshold=40000)\
-            .bucket(self.AUTHOR_NAME, 'terms', field=self.AUTHOR_NAME, size=1)
-
+        if self._es_conn.is_legacy():
+            bucket = s.aggs.bucket(self.TIMEFRAME, 'date_histogram', field=self._timeframe_field, interval='quarter')
+        else:
+            bucket = s.aggs.bucket(self.TIMEFRAME, 'date_histogram', field=self._timeframe_field, calendar_interval='quarter')
+        bucket.metric(self.LATEST_TS, 'max', field=self._sort_on_field) \
+                .bucket(self.AUTHOR_UUID, 'terms', field=self.AUTHOR_UUID, size=1000) \
+                .metric(self.CONTRIBUTIONS, 'cardinality', field=self.contribs_field, precision_threshold=40000)\
+                .bucket(self.AUTHOR_NAME, 'terms', field=self.AUTHOR_NAME, size=1)
         return s
 
     def __build_dataframe(self, timing, project_name=None, org_name=None):
